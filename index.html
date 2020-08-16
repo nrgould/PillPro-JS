@@ -3,52 +3,70 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="./style/style.css" />
+		<link rel="stylesheet" href="../style/main.css" />
 		<title>PillPro</title>
 	</head>
 	<body>
-		<section class="pill-input">
-			<form action="">
-				<label for="pill-name">Pill Name</label>
-				<input
-					type="text"
-					name="pill-name"
-					class="pill-name"
-					placeholder="Enter name"
-				/>
-				<div class="days-select">
-					<input type="checkbox" name="sunday" id="pill-date-sunday" />
-					<label for="sunday">Sunday</label>
-					<input type="checkbox" name="monday" id="pill-date-monday" />
-					<label for="monday">Monday</label>
-					<input type="checkbox" name="tuesday" id="pill-date-tuesday" />
-					<label for="tuesday">Tuesday</label>
-					<input type="checkbox" name="wednesday" id="pill-date-wednesday" />
-					<label for="wednesday">Wednesday</label>
-					<input type="checkbox" name="thursday" id="pill-date-thursday" />
-					<label for="thursday">Thursday</label>
-					<input type="checkbox" name="friday" id="pill-date-friday" />
-					<label for="friday">Friday</label>
-					<input type="checkbox" name="saturday" id="pill-date-saturday" />
-					<label for="saturday">Saturday</label>
-					<input type="checkbox" name="all" id="pill-date-all" />
-					<label for="all">Everyday</label>
+		<nav>
+			<div class="nav-header">
+				<div class="nav-logo">
+					<h1>PillPro</h1>
 				</div>
-				<label for="time">Time</label>
-				<input
-					type="time"
-					name="time"
-					id="pill-time"
-					placeholder="Enter time"
-					step="5"
-					min="16:00"
-					max="22:00"
-					autocomplete="on"
-				/>
-				<button class="submit-btn">Submit</button>
-			</form>
+				<div class="nav-links">
+					<ul>
+						<li><a href="./index.html">Home</a></li>
+						<li><a href="./create/index.html">Create</a></li>
+						<li><a href="">Info</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<section class="hero-section">
+			<div class="hero-wrapper">
+				<div class="hero-text">
+					<h1>Easily track and manage all your prescriptions.</h1>
+				</div>
+				<div class="hero-img"></div>
+			</div>
 		</section>
-		<section class="created-pills"></section>
-		<script src="./app.js"></script>
+		<section class="dashboard">
+			<div class="dashboard-header"></div>
+			<div class="dashboard-main-content">
+				<h2>Your Dashboard</h2>
+				<!-- <div class="time-group-1">
+					<h3 class="time-group-1-time">8:00 AM</h3>
+				</div> -->
+				<div class="created-pills">
+					<div class="pill-card">
+						<h3>Pill Name</h3>
+						<h4>8:00AM</h4>
+						<div class="pill-controls">
+							<div class="complete-btn"><i class="fas fa-check fa-lg"></i></div>
+							<div class="edit-btn"><h5>Edit</h5></div>
+							<div class="delete-btn">
+								<i class="far fa-trash-alt fa-lg"></i>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="dashboard-no-content">
+				<h2>
+					Looks like you don't have any pills. <br />
+					Creating one is easy!
+				</h2>
+				<a href="./create/index.html" class="create-btn">Create a Pill</a>
+			</div>
+			<div class="dashboard-trash">
+				<h5>Trash</h5>
+			</div>
+		</section>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+			integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+			crossorigin="anonymous"
+		/>
+		<script src="../app.js"></script>
 	</body>
 </html>

@@ -1,0 +1,35 @@
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	input {
+		margin-bottom: 2rem;
+	}
+	.days-select {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.header h1 {
+	text-align: center;
+}
+
+.alert {
+	background: rgb(241, 64, 44);
+	padding: 2rem 4rem;
+	color: white;
+	text-align: center;
+}
+
+.fall {
+	animation: falling-anim 0.5s ease-in-out;
+}
+
+@keyframes falling-anim {
+	to {
+		transform: translate(-10%, 100%);
+		opacity: 0;
+	}
+}

@@ -1,0 +1,95 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 62.5%;
+}
+
+body {
+	overflow-x: hidden;
+}
+
+h1 {
+	font-size: $header1;
+	font-family: "Open Sans Condensed", sans-serif;
+}
+
+h2 {
+	font-size: $header2;
+	font-family: "Open Sans Condensed", sans-serif;
+}
+
+h3 {
+	font-size: $header3;
+	font-family: "Open Sans Condensed", sans-serif;
+}
+
+h4 {
+	font-size: $header4;
+	font-family: "Alata", sans-serif;
+	font-weight: 500;
+}
+h5 {
+	font-size: $header5;
+	font-family: "Alata", sans-serif;
+	font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+	margin-bottom: 2.4rem;
+}
+
+li,
+button,
+a,
+p,
+input,
+label {
+	font-size: $text;
+	font-family: "Alata", sans-serif;
+	line-height: 3.2rem;
+}
+
+ul {
+	list-style-type: none;
+}
+
+a {
+	text-decoration: none;
+	color: $grey-text;
+}
+
+.create-btn {
+	padding: 2rem 3rem;
+	background-color: $main-blue;
+	color: white;
+	border-radius: 1.2rem;
+	transition: all 200ms ease;
+	@include shadow();
+	@include expand();
+	&:hover {
+		background-color: #4997fe;
+	}
+}
+
+.submit-btn {
+	padding: 1.5rem 2rem;
+	background-color: $main-blue;
+	color: white;
+	border-radius: 1.2rem;
+	transition: all 200ms ease;
+	border: none;
+	font-size: 1.6rem;
+	@include shadow();
+	@include expand();
+	&:hover {
+		background-color: #4997fe;
+	}
+}

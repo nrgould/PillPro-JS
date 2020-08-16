@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="../style/main.css" />
+		<title>PillPro</title>
+	</head>
+	<body>
+		<nav>
+			<div class="nav-header">
+				<div class="nav-logo">
+					<h1>PillPro</h1>
+				</div>
+				<div class="nav-links">
+					<ul>
+						<li><a href="../index.html">Home</a></li>
+						<li><a href="./index.html">Create</a></li>
+						<li><a href="">Info</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<section class="header">
+			<h1>Good Day</h1>
+		</section>
+		<section class="pill-input">
+			<div class="alert-container">
+				<h3 class="alert">This is an alert</h3>
+			</div>
+			<form action="">
+				<label for="pill-name">Pill Name</label>
+				<input
+					type="text"
+					name="pill-name"
+					class="pill-name"
+					placeholder="Enter name"
+				/>
+				<!-- <div class="days-select">
+					<input type="checkbox" name="sunday" id="pill-date-sunday" />
+					<label for="sunday">Sunday</label>
+					<input type="checkbox" name="monday" id="pill-date-monday" />
+					<label for="monday">Monday</label>
+					<input type="checkbox" name="tuesday" id="pill-date-tuesday" />
+					<label for="tuesday">Tuesday</label>
+					<input type="checkbox" name="wednesday" id="pill-date-wednesday" />
+					<label for="wednesday">Wednesday</label>
+					<input type="checkbox" name="thursday" id="pill-date-thursday" />
+					<label for="thursday">Thursday</label>
+					<input type="checkbox" name="friday" id="pill-date-friday" />
+					<label for="friday">Friday</label>
+					<input type="checkbox" name="saturday" id="pill-date-saturday" />
+					<label for="saturday">Saturday</label>
+					<input type="checkbox" name="all" id="pill-date-all" />
+					<label for="all">Everyday</label>
+				</div> -->
+				<label for="time">Time</label>
+				<input
+					type="time"
+					name="time"
+					id="pill-time"
+					placeholder="Enter time"
+					step="5"
+					min="16:00"
+					max="22:00"
+					autocomplete="on"
+				/>
+				<button class="submit-btn">Submit</button>
+			</form>
+		</section>
+		<section class="created-pills"></section>
+		<script src="../app.js"></script>
+	</body>
+</html>
