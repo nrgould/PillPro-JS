@@ -15,7 +15,7 @@
 				<div class="nav-links">
 					<ul>
 						<li><a href="./index.html">Home</a></li>
-						<li><a href="./create/index.html">Create</a></li>
+						<li><a href="#create">Create</a></li>
 						<li><a href="">Info</a></li>
 					</ul>
 				</div>
@@ -30,9 +30,21 @@
 			</div>
 		</section>
 		<section class="dashboard">
-			<div class="dashboard-header"></div>
+			<div class="dashboard-header">
+				<h3>Good Day</h3>
+				<div class="dash-header-row-2">
+					<h2>Your Dashboard</h2>
+					<div class="dashboard-controls">
+						<div class="create-pill-btn">
+							<i class="fas fa-plus fa-3x"></i>
+						</div>
+						<div class="filter-pill-btn">
+							<i class="fas fa-filter fa-3x"></i>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="dashboard-main-content">
-				<h2>Your Dashboard</h2>
 				<!-- <div class="time-group-1">
 					<h3 class="time-group-1-time">8:00 AM</h3>
 				</div> -->
@@ -50,23 +62,92 @@
 					</div>
 				</div>
 			</div>
-			<div class="dashboard-no-content">
+			<!-- <div class="dashboard-no-content">
 				<h2>
 					Looks like you don't have any pills. <br />
 					Creating one is easy!
 				</h2>
 				<a href="./create/index.html" class="create-btn">Create a Pill</a>
-			</div>
-			<div class="dashboard-trash">
+			</div> -->
+			<div class="dashboard-trash-btn">
 				<h5>Trash</h5>
 			</div>
+			<div class="dashboard-trash-menu-container">
+				<div class="dashboard-trash-menu">
+					<h4>Deleted Pills</h4>
+					<div class="trash-menu-row">
+						<div class="trash-menu-row-close">
+							<i class="fas fa-times fa-3x"></i>
+						</div>
+						<div class="trash-menu-row-info">
+							<p>PILL NAME</p>
+							<p>9AM</p>
+						</div>
+						<div class="trash-menu-row-controls">
+							<div class="trash-menu-restore">
+								<p>Restore</p>
+							</div>
+							<div class="trash-menu-delete">
+								<p>Delete</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</section>
+		<section class="create-pill-container">
+			<div class="create-pill-menu">
+				<div class="create-pill-menu-close">
+					<i class="fas fa-times fa-3x"></i>
+				</div>
+				<h3>Create a Pill</h3>
+				<div class="alert-container">
+					<h3 class="alert">This is an alert</h3>
+				</div>
+				<form action="">
+					<label for="pill-name">Pill Name</label>
+					<input
+						type="text"
+						name="pill-name"
+						class="pill-name"
+						placeholder="Enter name"
+					/>
+					<!-- <div class="days-select">
+                        <input type="checkbox" name="sunday" id="pill-date-sunday" />
+                        <label for="sunday">Sunday</label>
+                        <input type="checkbox" name="monday" id="pill-date-monday" />
+                        <label for="monday">Monday</label>
+                        <input type="checkbox" name="tuesday" id="pill-date-tuesday" />
+                        <label for="tuesday">Tuesday</label>
+                        <input type="checkbox" name="wednesday" id="pill-date-wednesday" />
+                        <label for="wednesday">Wednesday</label>
+                        <input type="checkbox" name="thursday" id="pill-date-thursday" />
+                        <label for="thursday">Thursday</label>
+                        <input type="checkbox" name="friday" id="pill-date-friday" />
+                        <label for="friday">Friday</label>
+                        <input type="checkbox" name="saturday" id="pill-date-saturday" />
+                        <label for="saturday">Saturday</label>
+                        <input type="checkbox" name="all" id="pill-date-all" />
+                        <label for="all">Everyday</label>
+                    </div> -->
+					<label for="time">Time</label>
+					<input
+						type="time"
+						name="time"
+						id="pill-time"
+						placeholder="Enter time"
+					/>
+					<button class="submit-btn">Submit</button>
+				</form>
+			</div>
+		</section>
+
 		<link
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
 			integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
 			crossorigin="anonymous"
 		/>
-		<script src="../app.js"></script>
+		<script src="./app.js"></script>
 	</body>
 </html>

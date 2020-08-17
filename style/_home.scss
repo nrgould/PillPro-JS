@@ -25,19 +25,26 @@ nav {
 	flex: 1 1 40rem;
 	li {
 		padding: 0rem 1rem;
+		margin-right: 1rem;
 		margin-bottom: 0;
+		transition: all 200ms ease;
 		@include expand();
+	}
+	li:hover a {
+		color: $main-blue;
 	}
 }
 
 /* HERO SECTION */
 
 .hero-section {
+	@include width(90%);
 	min-height: 40vh;
 }
 
 .hero-wrapper {
 	@include flex(center, center, row);
+	padding: 5rem;
 }
 
 /* DASHBOARD */
@@ -47,11 +54,30 @@ nav {
 	position: relative;
 }
 
-.dashboard-main-content {
-	text-align: center;
+.dash-header-row-2 {
+	@include flex(space-between, center, row);
+	transition: all 200ms ease-in-out;
 	h2 {
 		text-align: left;
+		color: $main-blue;
 	}
+}
+
+.dashboard-controls {
+	@include flex(center, center, row);
+	i {
+		cursor: pointer;
+		margin-right: 2rem;
+	}
+	i:hover {
+		color: $main-blue;
+	}
+	.fa-plus:hover {
+		color: $main-green;
+	}
+}
+.dashboard-main-content {
+	text-align: center;
 }
 
 .dashboard-no-content {
@@ -64,16 +90,20 @@ nav {
 .created-pills {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	// @include flex(space-around, space-evenly, row);
-	flex-wrap: wrap;
+	grid-gap: 2rem 1rem;
 }
 .pill-card {
 	position: relative;
-	border: 1px solid #dbdbdb;
+	background-color: white;
+	// border: 1px solid #dbdbdb;
+	// border-top-left-radius: 1.2rem;
+	// border-top-right-radius: 1.2rem;
+	border-radius: 1.2rem;
+	overflow: hidden;
 	min-width: 25rem;
 	min-height: 35rem;
 	padding: 3rem;
-	margin: 2rem 4rem;
+	// margin: 2rem 4rem;
 	@include flex(space-around, center, column);
 	@include shadow();
 }
@@ -88,7 +118,7 @@ nav {
 
 .delete-btn {
 	position: relative;
-	background-color: rgb(241, 64, 44);
+	background-color: $main-red;
 	flex: 1;
 	width: 100%;
 	height: 100%;
@@ -105,7 +135,7 @@ nav {
 
 .edit-btn {
 	position: relative;
-	background-color: rgb(56, 178, 109);
+	background-color: $main-green;
 	color: white;
 	flex: 1;
 	width: 100%;
@@ -137,10 +167,10 @@ nav {
 	}
 }
 
-.dashboard-trash {
+.dashboard-trash-btn {
 	position: absolute;
-	right: 10%;
-	bottom: 10%;
+	right: 2%;
+	bottom: -25%;
 	width: 6rem;
 	height: 6rem;
 	background-color: $grey-text;
@@ -152,4 +182,124 @@ nav {
 		@include center();
 		color: white;
 	}
+}
+
+.dashboard-trash-menu-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 200ms ease-in-out;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-trash-menu {
+	position: relative;
+	min-width: 50rem;
+	min-height: 50rem;
+	background-color: $grey-text;
+	border-radius: 1.2rem;
+	color: white;
+	padding: 3rem;
+	@include center();
+	@include shadow();
+	@include flex(space-evenly, center, column);
+}
+
+.trash-menu-row {
+	@include flex(center, center, row);
+	width: 100%;
+	// &::after {
+	// 	content: "";
+	// 	width: 100%;
+	// 	height: 0.4rem;
+	// 	background-color: white;
+	// }
+}
+
+.trash-menu-row-close {
+	position: absolute;
+	top: 2%;
+	right: 3%;
+	cursor: pointer;
+}
+
+.trash-menu-row-info {
+	@include flex(center, center, row);
+	flex: 3 1 20rem;
+	margin: 2rem;
+	// padding: 2rem;
+	p {
+		font-size: 1.6rem;
+	}
+}
+
+.trash-menu-row-info p:nth-child(1) {
+	margin-right: 2rem;
+}
+
+.trash-menu-row-controls {
+	@include flex(space-around, center, row);
+	flex: 1 1 20rem;
+	p {
+		font-size: 1.4rem;
+	}
+}
+
+.trash-menu-restore {
+	cursor: pointer;
+	&:hover {
+		color: $main-blue;
+	}
+}
+
+.trash-menu-delete {
+	cursor: pointer;
+	&:hover {
+		color: $main-red;
+	}
+}
+
+.dashboard-trash-menu-container.active {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.create-pill-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 200ms ease-in-out;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.create-pill-container.active {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.create-pill-menu {
+	background-color: white;
+	min-width: 50rem;
+	min-height: 60rem;
+	position: relative;
+	border-radius: 1.2rem;
+	padding: 3rem;
+	@include center();
+	@include shadow();
+	@include flex(space-evenly, center, column);
+}
+
+.create-pill-menu-close {
+	position: absolute;
+	top: 2%;
+	right: 3%;
+	cursor: pointer;
 }

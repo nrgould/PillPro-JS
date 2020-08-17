@@ -21,6 +21,7 @@ form {
 	padding: 2rem 4rem;
 	color: white;
 	text-align: center;
+	opacity: 0.85;
 }
 
 .fall {
@@ -29,7 +30,7 @@ form {
 
 @keyframes falling-anim {
 	to {
-		transform: translate(-10%, 100%);
+		transform: translateY(100%);
 		opacity: 0;
 	}
 }

@@ -1,6 +1,3 @@
-//when pill is submitted, create card or table row with pill info
-//homepage should dynamically display card for the pills to be taken that day
-
 //INPUTS
 const pillNameInput = document.querySelector(".pill-name");
 const pillTimeInput = document.querySelector("#pill-time");
@@ -8,20 +5,47 @@ const pillTimeInput = document.querySelector("#pill-time");
 //BUTTONS
 const submitBtn = document.querySelector(".submit-btn");
 const deleteBtn = document.querySelectorAll(".delete-btn");
+const trashMenuBtn = document.querySelector(".dashboard-trash-btn");
+const trashMenuCloseBtn = document.querySelector(".trash-menu-row-close");
+const createMenuBtn = document.querySelector(".create-pill-btn");
+const createMenuCloseBtn = document.querySelector(".create-pill-menu-close");
 
+//SECTIONS
 const pillSection = document.querySelector(".created-pills");
-const completedPillSelector = document.querySelectorAll(".complete-pill");
-const headerTitle = document.querySelector(".header h1");
+const trashMenu = document.querySelector(".dashboard-trash-menu-container");
+const trashMenuCard = document.querySelector(".dashboard-trash-menu");
+const createMenu = document.querySelector(".create-pill-container");
+const createMenuCard = document.querySelector(".create-pill-menu");
+
+//TEXT
+const dashHeader = document.querySelector(".dashboard-header h3");
 const alertMsg = document.querySelector(".alert");
 
 document.addEventListener("DOMContentLoaded", pullFromLocalStorage);
 submitBtn.addEventListener("click", pillInfoHandler);
 pillSection.addEventListener("click", deleteOrComplete);
+trashMenuBtn.addEventListener("click", () => {
+	popupHandler(trashMenu);
+});
+trashMenuCloseBtn.addEventListener("click", () => {
+	trashMenuCard.classList.add("fall");
+	trashMenu.classList.remove("active");
+	setTimeout(() => trashMenuCard.classList.remove("fall"), 1000);
+});
+createMenuBtn.addEventListener("click", () => {
+	console.log("success");
+	popupHandler(createMenu);
+});
+createMenuCloseBtn.addEventListener("click", () => {
+	createMenuCard.classList.add("fall");
+	createMenu.classList.remove("active");
+	setTimeout(() => createMenuCard.classList.remove("fall"), 1000);
+});
 
 //pill constructor function
 class Pill {
-	constructor(name, date, time) {
-		(this.name = name), (this.date = date), (this.time = time);
+	constructor(name, time) {
+		(this.name = name), (this.time = time);
 	}
 }
 
@@ -30,11 +54,11 @@ let globalDate = new Date();
 (function greeting(fname) {
 	let h = globalDate.getHours();
 	if (h <= 12) {
-		headerTitle.innerText = "Good Morning, " + fname;
+		dashHeader.innerText = "Good Morning, " + fname;
 	} else if (h >= 12 <= 18) {
-		headerTitle.innerText = "Good Afternoon, " + fname;
+		dashHeader.innerText = "Good Afternoon, " + fname;
 	} else {
-		headerTitle.innerText = "Good Evening, " + fname;
+		dashHeader.innerText = "Good Evening, " + fname;
 	}
 })("Nicholas");
 
@@ -42,7 +66,7 @@ let globalDate = new Date();
 function pillInfoHandler(event) {
 	event.preventDefault();
 	let pill;
-	pill = new Pill(pillNameInput.value, "everyday", pillTimeInput.value);
+	pill = new Pill(pillNameInput.value, pillTimeInput.value);
 
 	/* create element */
 	pillCreationHandler(pill.name, pill.time);
@@ -70,12 +94,11 @@ function deleteOrComplete(e) {
 	if (item.classList[0] === "delete-btn") {
 		const pillControlsDiv = item.parentElement;
 		const pillCardDiv = pillControlsDiv.parentElement;
-		console.log(pillCardDiv);
 		/* animation */
 		pillCardDiv.classList.add("fall");
 		pillCardDiv.addEventListener("transitionend", function () {
-			removeFromLocal(pillCardDiv);
 			pillCardDiv.remove();
+			removeFromLocal(pillCardDiv);
 		});
 	}
 
@@ -86,12 +109,9 @@ function deleteOrComplete(e) {
 	}
 }
 
-function assignTimeGroup(pill, hour) {
-	let timeGroup;
-	//figure out if a time group exists with that hour
-	if (timeGroup.time === hour) {
-		pill.classList.add(`time-group-${hour}`);
-	}
+function popupHandler(item) {
+	console.log("s");
+	item.classList.add("active");
 }
 
 function pillTimeHandler() {
@@ -143,7 +163,6 @@ function pillTimeReminder(pillObj) {
 
 function pillCreationHandler(name, time) {
 	//create main div
-
 	const pillDiv = document.createElement("div");
 	pillDiv.classList.add("pill-card");
 
@@ -232,3 +251,11 @@ function removeFromLocal(pill) {
 	pills.splice(pills.indexOf(pillIndex, 1));
 	localStorage.setItem("pills", JSON.stringify(pills));
 }
+
+/* TRASHED PILLS */
+
+//should remove from 'pills' local storage
+//move to separate local storage array specifically for trash
+//when trash btn is pressed, opens menu where all deleted pills are visisble
+//can choose to permanently delete or restore
+//restoring removes from 'deleted' local storage and places it back in regular 'pills' array
