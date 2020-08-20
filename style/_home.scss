@@ -40,11 +40,21 @@ nav {
 .hero-section {
 	@include width(90%);
 	min-height: 40vh;
+	margin-bottom: 20rem;
 }
 
 .hero-wrapper {
 	@include flex(center, center, row);
 	padding: 5rem;
+}
+.hero-text {
+	flex: 2 1 40rem;
+}
+.hero-img {
+	flex: 1 1 40rem;
+	svg {
+		max-width: 90%;
+	}
 }
 
 /* DASHBOARD */
@@ -90,22 +100,21 @@ nav {
 .created-pills {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	grid-gap: 2rem 1rem;
+	grid-gap: 2rem 1.6rem;
 }
 .pill-card {
 	position: relative;
 	background-color: white;
 	// border: 1px solid #dbdbdb;
-	// border-top-left-radius: 1.2rem;
-	// border-top-right-radius: 1.2rem;
-	border-radius: 1.2rem;
+	border-radius: 0.8rem;
 	overflow: hidden;
 	min-width: 25rem;
 	min-height: 35rem;
 	padding: 3rem;
-	// margin: 2rem 4rem;
+	cursor: pointer;
 	@include flex(space-around, center, column);
 	@include shadow();
+	@include expand();
 }
 
 .pill-controls {
@@ -118,7 +127,8 @@ nav {
 
 .delete-btn {
 	position: relative;
-	background-color: $main-red;
+	background-color: $light-grey;
+	// background-color: $main-red;
 	flex: 1;
 	width: 100%;
 	height: 100%;
@@ -135,7 +145,8 @@ nav {
 
 .edit-btn {
 	position: relative;
-	background-color: $main-green;
+	// background-color: $main-green;
+	background-color: $light-grey;
 	color: white;
 	flex: 1;
 	width: 100%;
@@ -150,9 +161,10 @@ nav {
 	}
 }
 
-.complete-btn {
+.completed-btn {
 	position: relative;
-	background-color: $main-blue;
+	background-color: $light-grey;
+	// background-color: $main-blue;
 	width: 100%;
 	height: 100%;
 	flex: 2;
@@ -201,7 +213,7 @@ nav {
 	min-width: 50rem;
 	min-height: 50rem;
 	background-color: $grey-text;
-	border-radius: 1.2rem;
+	border-radius: 0.8rem;
 	color: white;
 	padding: 3rem;
 	@include center();
@@ -211,13 +223,10 @@ nav {
 
 .trash-menu-row {
 	@include flex(center, center, row);
-	width: 100%;
-	// &::after {
-	// 	content: "";
-	// 	width: 100%;
-	// 	height: 0.4rem;
-	// 	background-color: white;
-	// }
+	width: 75%;
+	&:hover {
+		border-bottom: 1px solid #dbdbdb;
+	}
 }
 
 .trash-menu-row-close {
@@ -230,7 +239,7 @@ nav {
 .trash-menu-row-info {
 	@include flex(center, center, row);
 	flex: 3 1 20rem;
-	margin: 2rem;
+	margin: 0rem 2rem;
 	// padding: 2rem;
 	p {
 		font-size: 1.6rem;
@@ -298,6 +307,50 @@ nav {
 }
 
 .create-pill-menu-close {
+	position: absolute;
+	top: 2%;
+	right: 3%;
+	cursor: pointer;
+}
+
+.create-alert {
+	background: rgb(241, 64, 44);
+	padding: 2rem 4rem;
+	color: white;
+	text-align: center;
+	opacity: 0.85;
+}
+
+//edit pill popup
+.edit-pill-container {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	pointer-events: none;
+	transition: all 200ms ease-in-out;
+	background: rgba(0, 0, 0, 0.5);
+}
+.edit-pill-container.active {
+	opacity: 1;
+	pointer-events: all;
+}
+
+.edit-pill-menu {
+	background-color: white;
+	min-width: 50rem;
+	min-height: 60rem;
+	position: relative;
+	border-radius: 1.2rem;
+	padding: 3rem;
+	@include center();
+	@include shadow();
+	@include flex(space-evenly, center, column);
+}
+
+.edit-pill-menu-close {
 	position: absolute;
 	top: 2%;
 	right: 3%;
