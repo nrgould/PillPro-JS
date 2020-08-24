@@ -9,7 +9,8 @@ html {
 }
 
 body {
-	background-color: #ecf2f7;
+	// background-color: #fff;
+	background-color: #f7fcfd;
 	overflow-x: hidden;
 }
 
@@ -85,10 +86,12 @@ a {
 	}
 }
 
-.submit-btn {
+.submit-btn,
+.save-edit-btn {
 	width: 100%;
 	padding: 1rem 1.5rem;
-	background-color: $main-blue;
+	background: linear-gradient(to right, $main-green, $main-blue, $main-red);
+	background-size: 600% 600%;
 	color: white;
 	border-radius: 1.2rem;
 	transition: all 200ms ease;
@@ -96,9 +99,19 @@ a {
 	font-size: 1.6rem;
 	margin-top: 2rem;
 	cursor: pointer;
+	animation: gradient 25s ease infinite;
 	@include shadow();
 	@include expand();
-	&:hover {
-		background-color: #4997fe;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
 	}
 }

@@ -1,5 +1,6 @@
 //BUTTONS
 const submitBtn = document.querySelector(".submit-btn");
+const saveEdit = document.querySelector(".save-edit-btn");
 const deleteBtn = document.querySelectorAll(".delete-btn");
 const trashMenuBtn = document.querySelector(".dashboard-trash-btn");
 const trashMenuCloseBtn = document.querySelector(".trash-menu-row-close");
@@ -7,6 +8,7 @@ const createMenuBtn = document.querySelector(".create-pill-btn");
 const createMenuCloseBtn = document.querySelector(".create-pill-menu-close");
 const navCreateBtn = document.querySelector(".create-btn-nav");
 const editMenuCloseBtn = document.querySelector(".edit-pill-menu-close");
+const emptyTrashBtn = document.querySelector(".empty-trash");
 
 //SECTIONS
 const trashMenu = document.querySelector(".dashboard-trash-menu-container");
@@ -49,12 +51,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	trash.forEach(function (pill) {
 		pill = new Pill(pill.name, pill.time);
-		pill.trash();
+		pill.trashRow();
 	});
 });
 
 /* creates new pill */
 submitBtn.addEventListener("click", pillInfoHandler);
+
+/* edit existing pill */
+saveEdit.addEventListener("click", pillEditHandler);
 
 /* open trash menu */
 trashMenuBtn.addEventListener("click", () => {
@@ -67,6 +72,20 @@ trashMenuCloseBtn.addEventListener("click", () => {
 	trashMenu.classList.remove("active");
 	document.body.classList.remove("active");
 	setTimeout(() => trashMenuCard.classList.remove("fall"), 1000);
+});
+
+/* Empty Trash */
+emptyTrashBtn.addEventListener("click", () => {
+	let trash;
+	if (localStorage.getItem("trash") === null) {
+		trash = [];
+	} else {
+		trash = JSON.parse(localStorage.getItem("trash"));
+	}
+
+	trash.forEach((pill) => {
+		pill.remove();
+	});
 });
 
 /* open create menu */
@@ -153,31 +172,14 @@ class Pill {
 
 		// this.remindDash(pillDiv);
 	}
-	pushLocal() {
-		//gets pills from storage
-		let pills;
-		if (localStorage.getItem("pills") === null) {
-			pills = [];
-		} else {
-			pills = JSON.parse(localStorage.getItem("pills"));
-		}
-
-		//push object to existing or created array
-		pills.push(this);
-
-		//set array back to LocalStorage
-		localStorage.setItem("pills", JSON.stringify(pills));
-	}
-	alert(message) {
-		//animation in
-		//need GSAP lol
-		alertMsg.style.display = "block";
-
-		//change message
-		alertMsg.innerText = message;
-
-		//animate out
-		setTimeout(() => (alertMsg.style.display = "none"), 2000);
+	delete(div) {
+		div.classList.add("fall");
+		this.removeLocal();
+		this.moveTrash();
+		//GSAP animate to trash icon
+		div.addEventListener("transitionend", () => {
+			div.remove();
+		});
 	}
 	moveTrash() {
 		//set localstorage
@@ -192,10 +194,10 @@ class Pill {
 
 		trash.forEach(function (pill) {
 			pill = new Pill(pill.name, pill.time);
-			pill.trash();
+			pill.trashRow();
 		});
 	}
-	trash() {
+	trashRow() {
 		const trashRow = document.createElement("div");
 		trashRow.classList.add("trash-menu-row");
 
@@ -261,20 +263,23 @@ class Pill {
 		const editName = document.querySelector(".edit-pill-name");
 		editName.value = this.name;
 
-		const editTime = document.querySelector("#edit-time-select");
+		const editTime = document.querySelector(".edit-time-select");
 		editTime.value = this.time;
-
-		const saveEdit = document.querySelector(".save-edit-btn");
-		saveEdit.addEventListener("click", () => console.log("edited"));
 	}
-	delete(div) {
-		div.classList.add("fall");
-		this.removeLocal();
-		this.moveTrash();
-		//GSAP animate to trash icon
-		div.addEventListener("transitionend", () => {
-			div.remove();
-		});
+	pushLocal() {
+		//gets pills from storage
+		let pills;
+		if (localStorage.getItem("pills") === null) {
+			pills = [];
+		} else {
+			pills = JSON.parse(localStorage.getItem("pills"));
+		}
+
+		//push object to existing or created array
+		pills.push(this);
+
+		//set array back to LocalStorage
+		localStorage.setItem("pills", JSON.stringify(pills));
 	}
 	removeLocal() {
 		let pills;
@@ -314,13 +319,21 @@ class Pill {
 			div.style.display = "none";
 		}
 	}
-	group() {
-		//add pill to different groups based on time
-	}
 	allPills(div) {
 		//put every pill object in all pills
 		const allPillsSection = document.querySelector(".all-pills-cards");
 		allPillsSection.appendChild(div);
+	}
+	alert(message) {
+		//animation in
+		//need GSAP lol
+		alertMsg.style.display = "block";
+
+		//change message
+		alertMsg.innerText = message;
+
+		//animate out
+		setTimeout(() => (alertMsg.style.display = "none"), 2000);
 	}
 }
 
@@ -340,7 +353,7 @@ let globalDate = new Date();
 //SHOULD dynamically assign each pill to a time group, and if one does not exist, create it
 function pillInfoHandler(e) {
 	const pillNameInput = document.querySelector(".create-pill-name");
-	const timeSelectInput = document.querySelector("#create-time-select");
+	const timeSelectInput = document.querySelector(".create-time-select");
 	e.preventDefault();
 	let pill = new Pill();
 	pill.name = pillNameInput.value;
@@ -357,6 +370,11 @@ function pillInfoHandler(e) {
 	timeSelectInput.value = "6";
 
 	pill.alert(`New Pill ${pill.name} created`);
+}
+
+function pillEditHandler(e) {
+	e.preventDefault();
+	console.log("edited");
 }
 
 //if no pills have been created, show hero section

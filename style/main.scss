@@ -30,8 +30,11 @@ $main-green: rgb(56, 178, 109);
 
 //Only works for box-shadows.
 @mixin shadow() {
-	box-shadow: 0px 2px 4px rgba($color: #000000, $alpha: 0.2),
-		0px 3px 6px rgba($color: #000000, $alpha: 0.1);
+	// box-shadow: 0px 2px 4px rgba($color: #000000, $alpha: 0.2),
+	// 	0px 3px 6px rgba($color: #000000, $alpha: 0.1);
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+		0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+		0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
 }
 
 //IMPORTANT: must add set margins again when using media queries
