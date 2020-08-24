@@ -1,23 +1,21 @@
-form {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	input {
-		margin-bottom: 2rem;
-	}
-	.days-select {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-	}
-}
 .fall {
-	animation: falling-anim 0.5s ease-in-out;
+	animation: falling-anim 0.5s ease-out;
+}
+
+.slide {
+	animation: completed-anim 0.4s ease-out;
 }
 
 @keyframes falling-anim {
 	to {
 		transform: translateY(100%);
+		opacity: 0;
+	}
+}
+
+@keyframes completed-anim {
+	to {
+		transform: translateX(200%);
 		opacity: 0;
 	}
 }

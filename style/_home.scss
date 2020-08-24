@@ -46,6 +46,7 @@ nav {
 .hero-wrapper {
 	@include flex(center, center, row);
 	padding: 5rem;
+	flex-wrap: wrap;
 }
 .hero-text {
 	flex: 2 1 40rem;
@@ -100,7 +101,7 @@ nav {
 .created-pills {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-	grid-gap: 2rem 1.6rem;
+	grid-gap: 4rem 2rem;
 }
 .pill-card {
 	position: relative;
@@ -108,13 +109,31 @@ nav {
 	// border: 1px solid #dbdbdb;
 	border-radius: 0.8rem;
 	overflow: hidden;
-	min-width: 25rem;
+	min-width: 20rem;
 	min-height: 35rem;
 	padding: 3rem;
 	cursor: pointer;
 	@include flex(space-around, center, column);
 	@include shadow();
 	@include expand();
+}
+
+.pill-card-img {
+	max-width: 8rem;
+	max-height: 8rem;
+	border: 1px solid #dbdbdb;
+	border-radius: 0.5rem;
+	margin-bottom: 3rem;
+	@include shadow();
+	img {
+		max-width: 90%;
+		max-height: 90%;
+	}
+}
+
+.pill-card > p {
+	font-size: 1.4rem;
+	color: $light-grey;
 }
 
 .pill-controls {
@@ -277,6 +296,8 @@ nav {
 	pointer-events: all;
 }
 
+//create pill menu
+
 .create-pill-container {
 	position: fixed;
 	top: 0;
@@ -313,6 +334,40 @@ nav {
 	cursor: pointer;
 }
 
+// form label {
+// 	margin-bottom: 1.6rem;
+// }
+
+#time-select {
+	width: 100%;
+	margin-bottom: 1.6rem;
+	border: none;
+	font-size: 1.8rem;
+	font-weight: 500;
+	padding: 1rem 2rem;
+	border: 1px solid #dbdbdb;
+	@include shadow();
+}
+
+#time-select::after {
+	content: "%";
+}
+
+.pill-name {
+	width: 100%;
+	margin-bottom: 1.6rem;
+	border: none;
+	padding: 1rem 2rem;
+	border: 1px solid #dbdbdb;
+	@include shadow();
+}
+
+.add-time-input {
+	color: $light-grey;
+	cursor: pointer;
+}
+
+//ALERT
 .create-alert {
 	background: rgb(241, 64, 44);
 	padding: 2rem 4rem;
@@ -355,4 +410,17 @@ nav {
 	top: 2%;
 	right: 3%;
 	cursor: pointer;
+}
+
+//all pills section
+
+.all-pills {
+	@include width(90%);
+	margin-top: 20rem;
+}
+
+.all-pills-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-gap: 2rem 1.6rem;
 }

@@ -1,7 +1,3 @@
-//INPUTS
-const pillNameInput = document.querySelector(".pill-name");
-const pillTimeInput = document.querySelector("#pill-time");
-
 //BUTTONS
 const submitBtn = document.querySelector(".submit-btn");
 const deleteBtn = document.querySelectorAll(".delete-btn");
@@ -11,9 +7,10 @@ const createMenuBtn = document.querySelector(".create-pill-btn");
 const createMenuCloseBtn = document.querySelector(".create-pill-menu-close");
 const navCreateBtn = document.querySelector(".create-btn-nav");
 const editMenuCloseBtn = document.querySelector(".edit-pill-menu-close");
+
 //SECTIONS
-const pillSection = document.querySelector(".created-pills");
 const trashMenu = document.querySelector(".dashboard-trash-menu-container");
+const pillSection = document.querySelector(".created-pills");
 const trashMenuCard = document.querySelector(".dashboard-trash-menu");
 const createMenu = document.querySelector(".create-pill-container");
 const createMenuCard = document.querySelector(".create-pill-menu");
@@ -23,9 +20,6 @@ const editMenuCard = document.querySelector(".edit-pill-menu");
 //TEXT
 const dashHeader = document.querySelector(".dashboard-header h3");
 const alertMsg = document.querySelector(".create-alert");
-
-//OBJECTS
-let pill;
 
 //EVENT LISTENERS
 
@@ -41,14 +35,26 @@ document.addEventListener("DOMContentLoaded", () => {
 	pills.forEach(function (pill) {
 		pill = new Pill(pill.name, pill.time);
 		pill.create();
-		// pillCreationHandler(pill.name, pill.time);
+	});
+});
+
+/* load pills from trash */
+document.addEventListener("DOMContentLoaded", () => {
+	let trash;
+	if (localStorage.getItem("trash") === null) {
+		trash = [];
+	} else {
+		trash = JSON.parse(localStorage.getItem("trash"));
+	}
+
+	trash.forEach(function (pill) {
+		pill = new Pill(pill.name, pill.time);
+		pill.trash();
 	});
 });
 
 /* creates new pill */
 submitBtn.addEventListener("click", pillInfoHandler);
-
-// pillSection.addEventListener("click", deleteEditComplete);
 
 /* open trash menu */
 trashMenuBtn.addEventListener("click", () => {
@@ -59,6 +65,7 @@ trashMenuBtn.addEventListener("click", () => {
 trashMenuCloseBtn.addEventListener("click", () => {
 	trashMenuCard.classList.add("fall");
 	trashMenu.classList.remove("active");
+	document.body.classList.remove("active");
 	setTimeout(() => trashMenuCard.classList.remove("fall"), 1000);
 });
 
@@ -74,71 +81,77 @@ createMenuBtn.addEventListener("click", () => {
 createMenuCloseBtn.addEventListener("click", () => {
 	createMenuCard.classList.add("fall");
 	createMenu.classList.remove("active");
+	document.body.classList.remove("active");
 	setTimeout(() => createMenuCard.classList.remove("fall"), 1000);
 });
-
-alertMsg.style.display = "none";
 
 /* close edit menu */
 editMenuCloseBtn.addEventListener("click", () => {
 	editMenuCard.classList.add("fall");
 	editMenu.classList.remove("active");
+	document.body.classList.remove("active");
 	setTimeout(() => editMenuCard.classList.remove("fall"), 1000);
 });
+
+alertMsg.style.display = "none";
 
 /* pill constructor function */
 class Pill {
 	constructor(name, time) {
 		(this.name = name), (this.time = time);
 	}
-	nameTime() {
-		return this.name + " " + this.time;
-	}
+
 	create() {
 		//create main div
 		const pillDiv = document.createElement("div");
 		pillDiv.classList.add("pill-card");
 
 		//create pill name
-		const pillName = document.createElement("h3");
-		pillName.innerText = this.name;
-		pillDiv.appendChild(pillName);
+		const name = document.createElement("h3");
+		name.innerText = this.name;
+		pillDiv.appendChild(name);
 
 		//pill time
-		const pillTime = document.createElement("h4");
-		pillTime.innerText = this.time;
-		pillDiv.appendChild(pillTime);
+		const time = document.createElement("h4");
+		if (this.time < 12) {
+			time.innerText = `${this.time} am`;
+		} else {
+			time.innerText = `${this.time - 12} pm`;
+		}
+		pillDiv.appendChild(time);
 
 		//create pill controls div
-		const pillControls = document.createElement("div");
-		pillControls.classList.add("pill-controls");
-		pillDiv.appendChild(pillControls);
+		const controls = document.createElement("div");
+		controls.classList.add("pill-controls");
+		pillDiv.appendChild(controls);
 
 		//create complete btn
-		const completePillBtn = document.createElement("div");
-		completePillBtn.classList.add("completed-btn");
-		completePillBtn.innerHTML = '<i class="fas fa-check fa-lg"></i>';
-		pillControls.appendChild(completePillBtn);
-		completePillBtn.addEventListener("click", () => this.complete());
+		const complete = document.createElement("div");
+		complete.classList.add("completed-btn");
+		complete.innerHTML = '<i class="fas fa-check fa-lg"></i>';
+		controls.appendChild(complete);
+		complete.addEventListener("click", () => this.complete(pillDiv));
 
 		//create edit btn
-		const editPillBtn = document.createElement("div");
-		editPillBtn.classList.add("edit-btn");
-		let editPillBtnIcon = document.createElement("h5");
-		editPillBtnIcon.innerText = "Edit";
-		editPillBtn.appendChild(editPillBtnIcon);
-		pillControls.appendChild(editPillBtn);
-		editPillBtn.addEventListener("click", () => this.edit());
+		const edit = document.createElement("div");
+		edit.classList.add("edit-btn");
+		let editIcon = document.createElement("h5");
+		editIcon.innerText = "Edit";
+		edit.appendChild(editIcon);
+		controls.appendChild(edit);
+		edit.addEventListener("click", () => this.edit());
 
 		//create delete btn
-		const deletePillBtn = document.createElement("div");
-		deletePillBtn.classList.add("delete-btn");
-		deletePillBtn.innerHTML = '<i class="far fa-trash-alt fa-lg"></i>';
-		pillControls.appendChild(deletePillBtn);
-		deletePillBtn.addEventListener("click", () => this.delete(pillDiv));
+		const del = document.createElement("div");
+		del.classList.add("delete-btn");
+		del.innerHTML = '<i class="far fa-trash-alt fa-lg"></i>';
+		controls.appendChild(del);
+		del.addEventListener("click", () => this.delete(pillDiv));
 
 		//appending to parent
 		pillSection.appendChild(pillDiv);
+
+		// this.remindDash(pillDiv);
 	}
 	pushLocal() {
 		//gets pills from storage
@@ -167,6 +180,7 @@ class Pill {
 		setTimeout(() => (alertMsg.style.display = "none"), 2000);
 	}
 	moveTrash() {
+		//set localstorage
 		let trash;
 		if (localStorage.getItem("trash") === null) {
 			trash = [];
@@ -175,21 +189,92 @@ class Pill {
 		}
 		trash.push(this);
 		localStorage.setItem("trash", JSON.stringify(trash));
+
+		trash.forEach(function (pill) {
+			pill = new Pill(pill.name, pill.time);
+			pill.trash();
+		});
 	}
-	complete() {
+	trash() {
+		const trashRow = document.createElement("div");
+		trashRow.classList.add("trash-menu-row");
+
+		const info = document.createElement("div");
+		info.classList.add("trash-menu-row-info");
+		trashRow.appendChild(info);
+
+		const name = document.createElement("p");
+		name.innerText = this.name;
+		info.appendChild(name);
+
+		const time = document.createElement("p");
+		if (this.time < 12) {
+			time.innerText = `${this.time} AM`;
+		} else {
+			time.innerText = `${this.time - 12} PM`;
+		}
+		info.appendChild(time);
+
+		const controls = document.createElement("div");
+		controls.classList.add("trash-menu-row-controls");
+		trashRow.appendChild(controls);
+
+		const restore = document.createElement("p");
+		restore.classList.add("trash-menu-restore");
+		restore.innerText = "Restore";
+		controls.appendChild(restore);
+
+		const del = document.createElement("p");
+		del.classList.add("trash-menu-delete");
+		del.innerText = "Delete";
+		controls.appendChild(del);
+		del.addEventListener("click", () => {
+			//add animation
+			trashRow.remove();
+			let trash;
+			if (localStorage.getItem("trash") === null) {
+				trash = [];
+			} else {
+				trash = JSON.parse(localStorage.getItem("trash"));
+			}
+
+			trash.splice(
+				trash.findIndex((p) => p.name === this.name),
+				1
+			);
+			localStorage.setItem("trash", JSON.stringify(trash));
+		});
+
+		const trashSection = document.querySelector(".dashboard-trash-menu");
+		trashSection.appendChild(trashRow);
+	}
+	complete(div) {
 		console.log("marked as complete");
+		// div.classList.add('slide')
+		// //remove from dashboard until next day
+		// //until globalDate === 1
+		// setTimeout(() => div.classList.remove("slide"), 1000);
 	}
 	edit() {
 		popupHandler(editMenu);
+		//set value of forms to this
+		const editName = document.querySelector(".edit-pill-name");
+		editName.value = this.name;
+
+		const editTime = document.querySelector("#edit-time-select");
+		editTime.value = this.time;
+
+		const saveEdit = document.querySelector(".save-edit-btn");
+		saveEdit.addEventListener("click", () => console.log("edited"));
 	}
-	delete(pillDiv) {
-		pillDiv.classList.add("fall");
+	delete(div) {
+		div.classList.add("fall");
 		this.removeLocal();
 		this.moveTrash();
-		//add GSAP animations
-		// pillDiv.addEventListener("transitionend", () => {
-		// 	pillDiv.remove();
-		// });
+		//GSAP animate to trash icon
+		div.addEventListener("transitionend", () => {
+			div.remove();
+		});
 	}
 	removeLocal() {
 		let pills;
@@ -199,58 +284,43 @@ class Pill {
 			pills = JSON.parse(localStorage.getItem("pills"));
 		}
 
-		console.log(pills);
-		console.log(this);
-
-		// const pillTitle = pillDiv.children[0].innerText;
-
-		function checkPill(pillObj) {
-			return pillObj === this;
-		}
-
-		console.log(pills.filter(checkPill));
-		//needs to splice the pill that has a matching name
-
-		// pills.splice(pills.indexOf(pillIndex, 1));
+		pills.splice(
+			pills.findIndex((p) => p.name === this.name),
+			1
+		);
 		localStorage.setItem("pills", JSON.stringify(pills));
-
-		function checkName(name) {
-			return name === document.getElementById("ageToCheck").value;
-		}
-
-		function myFunction() {
-			document.getElementById("demo").innerHTML = names.filter(checkName);
-		}
 	}
-	timeHandler() {}
-	remind() {
-		//input time (sampleTime in this case)
-		//must take input from each pill object
-		let sampleTimeHours = 8;
-		let sampleTimeMinutes = 30;
-
-		//create global date to compare to (created in dynamic greeting)
-
+	remindDash(div) {
 		//create date object with inputted time
 		let pillDate = new Date(
 			globalDate.getFullYear(),
 			globalDate.getMonth(),
 			globalDate.getDay(),
-			pillObj.time,
-			sampleTimeMinutes,
+			this.time,
+			0,
 			0,
 			0
 		);
 
-		let hr = pillDate.getHours();
+		let pHr = pillDate.getHours();
 		let gHr = globalDate.getHours();
 
 		//compare times
-		if (hr <= gHr) {
+		if (gHr <= pHr) {
 			console.log("SHOWING CONTENT");
+			div.style.display = "grid";
 		} else {
 			console.log("NOT SHOWING CONTENT");
+			div.style.display = "none";
 		}
+	}
+	group() {
+		//add pill to different groups based on time
+	}
+	allPills(div) {
+		//put every pill object in all pills
+		const allPillsSection = document.querySelector(".all-pills-cards");
+		allPillsSection.appendChild(div);
 	}
 }
 
@@ -267,11 +337,14 @@ let globalDate = new Date();
 	}
 })("Nicholas");
 
-//need to figure out how to pass objects to another function, or place it in global scope.
 //SHOULD dynamically assign each pill to a time group, and if one does not exist, create it
 function pillInfoHandler(e) {
+	const pillNameInput = document.querySelector(".create-pill-name");
+	const timeSelectInput = document.querySelector("#create-time-select");
 	e.preventDefault();
-	pill = new Pill(pillNameInput.value, pillTimeInput.value);
+	let pill = new Pill();
+	pill.name = pillNameInput.value;
+	pill.time = timeSelectInput.value;
 
 	/* create element */
 	pill.create();
@@ -279,12 +352,9 @@ function pillInfoHandler(e) {
 	/* local storage */
 	pill.pushLocal();
 
-	/* pill reminder */
-	pillTimeReminder(pill);
-
 	/* reset input values */
 	pillNameInput.value = "";
-	pillTimeInput.value = "";
+	timeSelectInput.value = "6";
 
 	pill.alert(`New Pill ${pill.name} created`);
 }
@@ -292,50 +362,7 @@ function pillInfoHandler(e) {
 //if no pills have been created, show hero section
 //if no pill created, show dashboard message: "You don't have any pills." + Button that takes to creation page.
 
-// need to get higher parent element
-function deleteEditComplete(e) {
-	const item = e.target;
-	const pillControlsDiv = item.parentElement;
-	const pillCardDiv = pillControlsDiv.parentElement;
-
-	// delete the pill
-	//should move to trash
-	// if (item.classList[0] === "delete-btn") {
-	// 	console.log("delete btn pressed");
-	// 	/* animation */
-	// 	pillCardDiv.classList.add("fall");
-	// 	pillCardDiv.addEventListener("transitionend", function () {
-	// 		moveToTrash(pillCardDiv);
-	// 		pillCardDiv.remove();
-	// 		removeFromLocal(pillCardDiv);
-	// 	});
-	// }
-
-	if (item.classList[0] === "edit-btn") {
-		console.log("edit popup opened");
-		popupHandler(editMenu);
-	}
-
-	// complete
-	if (item.classList[0] === "completed-btn") {
-		console.log("marked as completed");
-		pillCardDiv.classList.toggle("completed");
-	}
-}
-
 function popupHandler(item) {
+	document.body.classList.add("active");
 	item.classList.add("active");
-}
-
-function removeFromLocal(pill) {
-	let pills;
-	if (localStorage.getItem("pills") === null) {
-		pills = [];
-	} else {
-		pills = JSON.parse(localStorage.getItem("pills"));
-	}
-	// console.log(pill.children[0].innerText);
-	const pillIndex = pill.children[0].innerText;
-	pills.splice(pills.indexOf(pillIndex, 1));
-	localStorage.setItem("pills", JSON.stringify(pills));
 }

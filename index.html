@@ -562,7 +562,7 @@
 			<div class="dashboard-header">
 				<h3>Good Day</h3>
 				<div class="dash-header-row-2">
-					<h2>Your Dashboard</h2>
+					<h2>Your upcoming meds</h2>
 					<div class="dashboard-controls">
 						<div class="create-pill-btn">
 							<i class="fas fa-plus fa-3x"></i>
@@ -579,8 +579,12 @@
 				</div> -->
 				<div class="created-pills">
 					<div class="pill-card">
+						<div class="pill-card-img">
+							<img src="./img/single-pill-23377800.jpg" alt="" />
+						</div>
 						<h3>Pill Name</h3>
 						<h4>8:00AM</h4>
+						<p>take daily until: Dec 5th, 2020</p>
 						<div class="pill-controls">
 							<div class="completed-btn">
 								<i class="fas fa-check fa-lg"></i>
@@ -606,29 +610,12 @@
 			<div class="dashboard-trash-menu-container">
 				<div class="dashboard-trash-menu">
 					<h4>Deleted Pills</h4>
-					<div class="trash-menu-row">
-						<div class="trash-menu-row-close">
-							<i class="fas fa-times fa-3x"></i>
-						</div>
-						<div class="trash-menu-row-info">
-							<p>PILL 1</p>
-							<p>9AM</p>
-						</div>
-						<div class="trash-menu-row-controls">
-							<div class="trash-menu-restore">
-								<p>Restore</p>
-							</div>
-							<div class="trash-menu-delete">
-								<p>Delete</p>
-							</div>
-						</div>
+					<div class="trash-menu-row-close">
+						<i class="fas fa-times fa-3x"></i>
 					</div>
 					<!-- <div class="trash-menu-row">
-						<div class="trash-menu-row-close">
-							<i class="fas fa-times fa-3x"></i>
-						</div>
 						<div class="trash-menu-row-info">
-							<p>PILL 2</p>
+							<p>PILL 1</p>
 							<p>9AM</p>
 						</div>
 						<div class="trash-menu-row-controls">
@@ -643,6 +630,10 @@
 				</div>
 			</div>
 		</section>
+		<section class="all-pills">
+			<h2>All Pills</h2>
+			<div class="all-pills-cards"></div>
+		</section>
 		<section class="create-pill-container">
 			<div class="create-pill-menu">
 				<div class="create-pill-menu-close">
@@ -653,13 +644,15 @@
 					<h4 class="create-alert">This is an alert</h4>
 				</div>
 				<form action="">
-					<label for="pill-name">Pill Name</label>
-					<input
-						type="text"
-						name="pill-name"
-						class="pill-name"
-						placeholder="Enter name"
-					/>
+					<div>
+						<label for="pill-name">Pill Name</label>
+						<input
+							type="text"
+							name="pill-name"
+							class="pill-name create-pill-name"
+							placeholder="Enter name"
+						/>
+					</div>
 					<!-- <div class="days-select">
                         <input type="checkbox" name="sunday" id="pill-date-sunday" />
                         <label for="sunday">Sunday</label>
@@ -678,16 +671,46 @@
                         <input type="checkbox" name="all" id="pill-date-all" />
                         <label for="all">Everyday</label>
                     </div> -->
-					<div class="time-input">
+					<div class="time-select">
+						<label for="time">What time do you take this?</label>
+						<select name="time" id="time-select create-time-select">
+							<option value="6">6am</option>
+							<option value="7">7am</option>
+							<option value="8">8am</option>
+							<option value="9">9am</option>
+							<option value="10">10am</option>
+							<option value="11">11am</option>
+							<option value="12">12pm</option>
+							<option value="13">1pm</option>
+							<option value="14">2pm</option>
+							<option value="15">3pm</option>
+							<option value="16">4pm</option>
+							<option value="17">5pm</option>
+							<option value="18">6pm</option>
+							<option value="19">7pm</option>
+							<option value="20">8pm</option>
+							<option value="21">9pm</option>
+							<option value="22">10pm</option>
+							<option value="23">11pm</option>
+							<option value="24">12am</option>
+							<option value="1">1am</option>
+							<option value="2">2am</option>
+							<option value="3">3am</option>
+							<option value="4">4am</option>
+							<option value="5">5am</option>
+						</select>
+						<p class="add-time-input">add another time</p>
+					</div>
+					<!-- <div class="time-input">
 						<label for="time">Time</label>
 						<input
 							type="time"
 							name="time"
-							id="pill-time"
+							class="pill-time"
 							placeholder="Enter time"
 						/>
 						<p class="add-time-input">add another time</p>
-					</div>
+					</div> -->
 					<button class="submit-btn">Create</button>
 				</form>
 			</div>
@@ -697,7 +720,67 @@
 				<div class="edit-pill-menu-close">
 					<i class="fas fa-times fa-3x"></i>
 				</div>
-				<h3>same inputs as creation</h3>
+				<h3>Edit</h3>
+				<form action="">
+					<div>
+						<label for="edit-pill-name">Pill Name</label>
+						<input
+							type="text"
+							name="edit-pill-name"
+							class="pill-name edit-pill-name"
+							placeholder="Enter name"
+						/>
+					</div>
+					<!-- <div class="days-select">
+                        <input type="checkbox" name="sunday" id="pill-date-sunday" />
+                        <label for="sunday">Sunday</label>
+                        <input type="checkbox" name="monday" id="pill-date-monday" />
+                        <label for="monday">Monday</label>
+                        <input type="checkbox" name="tuesday" id="pill-date-tuesday" />
+                        <label for="tuesday">Tuesday</label>
+                        <input type="checkbox" name="wednesday" id="pill-date-wednesday" />
+                        <label for="wednesday">Wednesday</label>
+                        <input type="checkbox" name="thursday" id="pill-date-thursday" />
+                        <label for="thursday">Thursday</label>
+                        <input type="checkbox" name="friday" id="pill-date-friday" />
+                        <label for="friday">Friday</label>
+                        <input type="checkbox" name="saturday" id="pill-date-saturday" />
+                        <label for="saturday">Saturday</label>
+                        <input type="checkbox" name="all" id="pill-date-all" />
+                        <label for="all">Everyday</label>
+                    </div> -->
+					<div class="time-select">
+						<label for="time">What time do you take this?</label>
+						<select name="time" id="time-select edit-time-select">
+							<option value="6">6am</option>
+							<option value="7">7am</option>
+							<option value="8">8am</option>
+							<option value="9">9am</option>
+							<option value="10">10am</option>
+							<option value="11">11am</option>
+							<option value="12">12pm</option>
+							<option value="13">1pm</option>
+							<option value="14">2pm</option>
+							<option value="15">3pm</option>
+							<option value="16">4pm</option>
+							<option value="17">5pm</option>
+							<option value="18">6pm</option>
+							<option value="19">7pm</option>
+							<option value="20">8pm</option>
+							<option value="21">9pm</option>
+							<option value="22">10pm</option>
+							<option value="23">11pm</option>
+							<option value="24">12am</option>
+							<option value="1">1am</option>
+							<option value="2">2am</option>
+							<option value="3">3am</option>
+							<option value="4">4am</option>
+							<option value="5">5am</option>
+						</select>
+						<p class="add-time-input">add another time</p>
+					</div>
+					<button class="save-edit-btn">save</button>
+				</form>
 			</div>
 		</section>
 
