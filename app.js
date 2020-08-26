@@ -348,7 +348,7 @@ let globalDate = new Date();
 	} else if (h > 18) {
 		dashHeader.innerText = "Good Evening, " + fname;
 	}
-})("Nicholas");
+})(prompt("what is your first name?"));
 
 //SHOULD dynamically assign each pill to a time group, and if one does not exist, create it
 function pillInfoHandler(e) {
@@ -384,3 +384,8 @@ function popupHandler(item) {
 	document.body.classList.add("active");
 	item.classList.add("active");
 }
+
+/* GSAP */
+const pill1 = document.querySelector("#pill1");
+const pill2 = document.querySelector("#pill2");
+const pill3 = document.querySelector("#pill3");

@@ -14,11 +14,10 @@
 
 nav {
 	min-height: 5vh;
-	// background-color: white;
-	background: linear-gradient(to right, $main-green, $main-blue, $main-red);
-	background-size: 600% 600%;
-	animation: gradient 25s ease infinite;
-	// box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+	background-color: white;
+	// background: linear-gradient(to right, $main-green, $main-blue, $main-red);
+	// background-size: 600% 600%;
+	// animation: gradient 25s ease infinite;
 	box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
 		0 18px 36px -18px rgba(0, 0, 0, 0.3);
 }
@@ -34,6 +33,10 @@ nav {
 	cursor: pointer;
 	svg {
 		height: 4rem;
+		transform: scale(1.5);
+	}
+	svg text {
+		font-family: "Montserrat", sans-serif;
 	}
 }
 
@@ -46,9 +49,6 @@ nav {
 		margin-bottom: 0;
 		transition: all 200ms ease;
 		@include expand();
-	}
-	li a {
-		color: white;
 	}
 }
 
@@ -73,6 +73,7 @@ nav {
 	flex: 1 1 40rem;
 	svg {
 		max-width: 90%;
+		@include expand();
 	}
 }
 
@@ -385,12 +386,13 @@ nav {
 	font-weight: 500;
 	padding: 1rem 2rem;
 	border: 1px solid #dbdbdb;
+	background: white;
 	@include shadow();
 }
 
-// #time-select::after {
-// 	content: "%";
-// }
+#time-select::after {
+	content: "%";
+}
 
 .pill-name {
 	width: 100%;
